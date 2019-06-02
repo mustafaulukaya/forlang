@@ -20,7 +20,10 @@ router.post('/register', function(req, res, next) {
     const promise = user.save();
 
     promise.then((data) => {
-      res.json(data);
+      res.json({
+        username : data.username,
+        message: 'Successfully created user.'
+      });
     }).catch((err) => {
       res.json(err);
     });
