@@ -27,6 +27,7 @@ router.post('/register', function(req, res, next) {
 
     promise.then((data) => {
       res.json({
+        id: data._id,
         firstname : data.firstname,
         lastname: data.lastname,
         phonenumber: data.phonenumber,
