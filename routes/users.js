@@ -4,10 +4,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 //Models
-const User = require('../models/user');
+const User = require('../models/Visa/user');
+const DeletedUser = require('../models/Visa/deleteduser');
 
 
-/* GET users listing. */
+/* POST user register. */
 router.post('/register', function(req, res, next) {
   const {firstname, lastname, phonenumber, email, password} = req.body;
 
@@ -19,7 +20,6 @@ router.post('/register', function(req, res, next) {
       lastname,
       phonenumber,
       email,
-      ModifiedAt,
       password : hash
     });
 
@@ -40,7 +40,8 @@ router.post('/register', function(req, res, next) {
   });
 });
 
-router.get('/login', (req, res, next) => {
+/* POST user login. */
+router.post('/login', (req, res, next) => {
   const {email , password} = req.body;
 
   User.findOne({
@@ -83,7 +84,7 @@ router.get('/login', (req, res, next) => {
   });
 });
 
-
+//DELETE user
 router.delete('/:user_id', function (req, res, next) {
   const promise = User.findByIdAndRemove(req.params.user_id);
 
@@ -94,11 +95,38 @@ router.delete('/:user_id', function (req, res, next) {
         message: 'User not found.'
       });
     }else{
+      const user = new DeletedUser({
+        firstname: user.firstname,
+        lastname: user.lastname,
+        phonenumber: user.phonenumber,
+        email: user.email,
+        password : user.password
+      });
+
+      const promise = user.save();
       res.json(user);
     }
   }).catch((err) => {
     res.json(err);
   });
-
 });
+
+//GET user information
+router.get('/:user_id', (req, res, next) => {
+  const promise = User.findById(req.params.user_id);
+
+  promise.then((err,user) => {
+    if(err){
+      next({message :'User not found.', code : req.app.get('ERRORS').USER_NOT_FOUND});
+    }else{
+      if(user){
+        res.json(user);
+      }
+      else{
+        next({message :'User not found.', code : req.app.get('ERRORS').USER_NOT_FOUND});
+      }
+    }
+  });
+});
+
 module.exports = router;

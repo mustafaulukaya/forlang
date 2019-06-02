@@ -25,6 +25,10 @@ const DeletedUserSchema = new Schema({
         type : String,
         minlength: 8
     },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
     status:{
         type: Number,
         default: 2
