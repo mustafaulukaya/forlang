@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const  Schema = mongoose.Schema;
 
 
-const UserSchema = new Schema({
+const DeletedUserSchema = new Schema({
     firstname : {
         type : String,
         minlength: 2,
@@ -25,17 +25,9 @@ const UserSchema = new Schema({
         type : String,
         minlength: 8
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    ModifiedAt: {
-        type: Date,
-        default: Date.now
-    },
     status:{
         type: Number,
-        default: 0
+        default: 2
     }
 });
 
@@ -43,7 +35,7 @@ const UserSchema = new Schema({
 * status =>
 *           0 -> Not Confirmed
 *           1 -> Active
-*
+*           2 -> Deleted
 * */
 
-module.exports = mongoose.model('user',UserSchema);
+module.exports = mongoose.model('deleteduser',DeletedUserSchema);

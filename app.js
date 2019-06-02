@@ -13,8 +13,13 @@ const app = express();
 const db = require('./helper/db')();
 //Config
 const config = require('./Config');
-
 app.set('jwt_secret_key',config.jwt_secret_key);
+
+
+//Error Codes
+const errors = require('./ErrorCodes');
+app.set('ERRORS',errors.ERRORS);
+
 
 //Middleware
 const verifyToken = require('./middleware/verifylogin');
@@ -47,7 +52,12 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    error: {
+      code : err.code,
+      message: err.message
+    }
+  });
 });
 
 module.exports = app;

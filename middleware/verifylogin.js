@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     jwt.verify(token, req.app.get('jwt_secret_key'), (err,decode) => {
        if(err){
            res.json({
-               errCode: 98,
+               errCode: req.app.get('ERRORS').FAILED_AUTHENTICATE_TOKEN,
                message: 'Failed to authenticate token.'
            });
        }
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
     });
   }else{
       res.json({
-          errCode: 99,
+          errCode: req.app.get('ERRORS').NO_TOKEN_PROVIDED,
           message: 'Authentication required. No token provided.'
       });
   }
