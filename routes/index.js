@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'SYSTEM-UP', update: Date.now() });
+  res.render('index', { title: 'SYSTEM-UP', update: new Date().toLocaleDateString() + ' // ' + new Date().toLocaleTimeString() });
 });
 
 module.exports = router;
