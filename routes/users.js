@@ -16,18 +16,18 @@ router.post('/register', function(req, res, next) {
       username,
       password : hash
     });
-  });
 
-  const promise = user.save();
+    const promise = user.save();
 
-  promise.then((data) => {
-    res.json(data);
-  }).catch((err) => {
-    res.json(err);
+    promise.then((data) => {
+      res.json(data);
+    }).catch((err) => {
+      res.json(err);
+    });
   });
 });
 
-router.get('/authenticate', (req, res, next) => {
+router.get('/login', (req, res, next) => {
   const {username , password} = req.body;
 
   User.findOne({
