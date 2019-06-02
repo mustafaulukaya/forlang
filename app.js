@@ -24,6 +24,8 @@ app.set('ERRORS',errors.ERRORS);
 //Middleware
 const verifyToken = require('./middleware/verifylogin');
 
+//Build Time
+app.set('BuildTime', new Date().toLocaleDateString() + ' // ' + new Date().toLocaleTimeString())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
