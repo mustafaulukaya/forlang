@@ -24,8 +24,14 @@ app.set('ERRORS',errors.ERRORS);
 //Middleware
 const verifyToken = require('./middleware/verifylogin');
 
+const today = new Date();
+const date = today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear();
+const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+const dateTime = date+' || '+time;
+
+
 //Build Time
-app.set('BuildTime', new Date().toLocaleDateString() + ' // ' + new Date().toLocaleTimeString())
+app.set('BuildTime', dateTime)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
