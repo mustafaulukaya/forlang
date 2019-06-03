@@ -1,10 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const Should = chai.Should();
-const bcrypt = require('bcryptjs');
+const should = chai.should();
 
-
-const server = require('../../app');
+const server = require('../../../app');
 
 chai.use(chaiHttp);
 
