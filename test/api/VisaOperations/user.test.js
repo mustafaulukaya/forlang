@@ -13,7 +13,7 @@ describe('Visa Operations', () => {
             Name: 'test',
             Surname: 'test',
             Email : (Math.random()* Number.MAX_SAFE_INTEGER).toString(),
-            password : '12345'
+            Password : '12345'
         };
 
         chai.request(server).post('/api/v1/visa/register').send(user).end((err, res) => {
@@ -32,13 +32,14 @@ describe('Visa Operations', () => {
     it('User Login', (done) => {
 
         const credentials = {
-            email: 'system.admin@lileduca.com',
-            password: 'bqo7d0u7!9.lil'
+            Email: 'system.admin@lileduca.com',
+            Password: 'bqo7d0u7!9.lil'
         };
 
         chai.request(server).post('/api/v1/visa/login').send(credentials).end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
+            res.body.should.have.property('UserID');
             res.body.should.have.property('message');
             res.body.should.have.property('token');
             done();

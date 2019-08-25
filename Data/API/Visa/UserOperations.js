@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const app = require('../../../app');
 
 const GeneralFunctions = require('../System/General');
 const MailFactory = require('../System/MailFactory');
@@ -57,7 +58,7 @@ exports.VerifyPassword = function (input_pass, exist_pass,user) {
                     Email: user.Email,
                 };
 
-                const token = jwt.sign(payload, req.app.get('jwt_secret_key'),{
+                const token = jwt.sign(payload, global.jwt_secret_key,{
                     expiresIn : 720 //12 saat - dakika cinsinden
                 });
 

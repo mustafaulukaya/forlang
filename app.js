@@ -11,7 +11,7 @@ const db = require('./helper/db')();
 //Config
 const config = require('./Config');
 app.set('jwt_secret_key',config.jwt_secret_key);
-
+global.jwt_secret_key = config.jwt_secret_key;
 
 //Error Codes
 const errors = require('./ErrorCodes');
