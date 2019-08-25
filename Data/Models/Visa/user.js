@@ -3,39 +3,45 @@ const  Schema = mongoose.Schema;
 
 
 const UserSchema = new Schema({
-    firstname : {
+    Name : {
         type : String,
         minlength: 2,
+        required: true
     },
-    lastname: {
+    Surname: {
         type : String,
         minlength: 2,
+        required: true
     },
-    phonenumber:{
+    Email:{
       type: String,
       required: true
     },
-    email: {
+    Password: {
         type : String,
-        minlength: 1,
+        minlength: 8,
         required: true,
         unique: true
     },
-    password: {
-        type : String,
-        minlength: 8
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    ModifiedAt: {
-        type: Date,
-        default: Date.now
-    },
-    status:{
+    UserType: {
         type: Number,
-        default: 0
+        default: 2 // 0 system admin | 1 teacher | 2 student | 3 teacher&student
+    },
+    TakenLessons: [],
+    GivenLessons: [],
+    StatusID: {
+        type: Number,
+        default: 1 // 1 active | 0 passive | 2 deleted
+    },
+    CreatedAt:{
+        type: Date,
+        default: Date.now
+
+    },
+    ModifiedAt:{
+        type: Date,
+        default: Date.now
+
     }
 });
 

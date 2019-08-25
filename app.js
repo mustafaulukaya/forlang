@@ -4,9 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 const app = express();
 
 //db connection
@@ -21,6 +18,10 @@ const errors = require('./ErrorCodes');
 app.set('ERRORS',errors.ERRORS);
 
 
+const indexRouter = require('./routes/Common/index');
+const usersRouter = require('./routes/Common/users');
+const usersWithLoginRequire = require('./routes/RequireLogin/users');
+
 //Middleware
 const verifyToken = require('./middleware/verifylogin');
 
@@ -28,7 +29,6 @@ const today = new Date();
 const date = today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear();
 const time = (today.getHours() + 3) + ":" + today.getMinutes() + ":" + today.getSeconds();
 const dateTime = date+' || '+time;
-
 
 //Build Time
 app.set('BuildTime', dateTime)
@@ -44,8 +44,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api',verifyToken);
-app.use('/user', usersRouter);
+app.use('/api/v1/visa', usersRouter);
+app.use('/api/v1/visa/user',verifyToken);
+app.use('/api/v1/visa/user', usersWithLoginRequire);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
